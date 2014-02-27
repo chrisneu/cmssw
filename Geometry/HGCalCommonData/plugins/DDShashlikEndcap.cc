@@ -63,12 +63,17 @@ DDShashlikEndcap::createQuarter( DDCompactView& cpv, int xQuadrant, int yQuadran
   double phiY = theta;
   double phiZ = 3*theta; 
   double offsetZ = m_zoffset;
-  double offsetX = offsetZ * tan( xphi );
-  double offsetY = offsetZ * tan( yphi );
+  double offsetXY = m_xyoffset;
 
-  while( abs(offsetY) < m_rMax )
+  // ccn: these need to change for no-taper option
+  //double offsetX = offsetZ * tan( xphi );
+  //double offsetY = offsetZ * tan( yphi );
+  double offsetX = xQuadrant*0.5*offsetXY;
+  double offsetY = yQuadrant*0.5*offsetXY;
+
+  while( abs(offsetY) < m_rMax)
   {
-    while( abs(offsetX) < m_rMax )
+    while( abs(offsetX) < m_rMax)
     {
       double limit = sqrt( offsetX*offsetX + offsetY*offsetY );
       
@@ -89,6 +94,11 @@ DDShashlikEndcap::createQuarter( DDCompactView& cpv, int xQuadrant, int yQuadran
 						  * ( *DDcreateRotationMatrix( theta + xphi, phiX, 90.*CLHEP::deg, 90.*CLHEP::deg, xphi, 0.0 ))));
 	}
       
+	edm::LogInfo("HGCalGeom") << "Module " << copyNo << ":location = ("
+				  << offsetX << ","
+				  << offsetY << ","
+				  << offsetZ << ")";
+
 	DDTranslation tran( offsetX, offsetY, offsetZ );
 	
 	DDName parentName = parent().name(); 
@@ -97,12 +107,18 @@ DDShashlikEndcap::createQuarter( DDCompactView& cpv, int xQuadrant, int yQuadran
 	copyNo += m_incrCopyNo;
       }
       xphi +=  xQuadrant*2.*tiltAngle;
-      offsetX = offsetZ * tan( xphi );
+      // ccn: change this for no-taper
+      //offsetX = offsetZ * tan( xphi );
+      offsetX += xQuadrant*offsetXY;
     }
     yphi += yQuadrant*2.*tiltAngle;
     xphi =  xQuadrant*tiltAngle;
-    offsetX = offsetZ * tan( xphi );
-    offsetY = offsetZ * tan( yphi );
+    // ccn: change this for no-taper
+    //offsetX = offsetZ * tan( xphi );
+    //offsetY = offsetZ * tan( yphi );
+    offsetX = xQuadrant*0.5*offsetXY;
+    offsetY += yQuadrant*offsetXY;
+
   }
   
   return copyNo;
