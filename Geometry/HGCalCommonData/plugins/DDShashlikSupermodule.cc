@@ -70,12 +70,16 @@ DDShashlikSupermodule::execute( DDCompactView& cpv )
     //
     // check these and write new ones!...DONE
     //
-    double dc2c = (sin(CLHEP::pi - m_stepAngle)*(0.5*m_zoffset/sin(0.5*m_stepAngle)));
+    // ccn: change for no-taper  
+    //double dc2c = (sin(CLHEP::pi - m_stepAngle)*(0.5*m_zoffset/sin(0.5*m_stepAngle)));
+    double dc2c = m_zoffset;
     double offsetXc2c = dc2c*cos(0.5*m_stepAngle);
     double offsetYc2c = dc2c*cos(0.5*m_stepAngle);
     double offsetZc2c = dc2c*sin(0.5*m_stepAngle);
 
-    double dc2secondc = (sin(CLHEP::pi - m_stepAngle)*(dc2c/sin(0.5*m_stepAngle)));
+    // ccn: change for no-taper  
+    //double dc2secondc = (sin(CLHEP::pi - m_stepAngle)*(dc2c/sin(0.5*m_stepAngle)));
+    double dc2secondc = 2.0*m_zoffset;
     double offsetXc2secondc = dc2secondc*cos(m_stepAngle);
     double offsetYc2secondc = dc2secondc*cos(m_stepAngle);
     double offsetZc2secondc = dc2secondc*sin(m_stepAngle);
@@ -89,11 +93,11 @@ DDShashlikSupermodule::execute( DDCompactView& cpv )
 
 
 
-    //edm::LogInfo("HGCalGeom") << "*****************";
-    //edm::LogInfo("HGCalGeom") << "*****************";
-    //edm::LogInfo("HGCalGeom") << "DDShashlikSuperModule::execute: m_startAngle = " << m_startAngle/CLHEP::deg << " deg, m_stepAngle = " << m_stepAngle/CLHEP::deg << " deg, m_zoffset = " << m_zoffset; 
-    //edm::LogInfo("HGCalGeom") << "DDShashlikSuperModule::execute: c2c d= "<< dc2c << " = (" << offsetXc2c << "," << offsetYc2c << "," << offsetZc2c << ")"; 
-    //edm::LogInfo("HGCalGeom") << "DDShashlikSuperModule::execute: c2secondc d= "<< dc2secondc << " = (" << offsetXc2secondc << "," << offsetYc2secondc << "," << offsetZc2secondc << ")"; 
+//     edm::LogInfo("HGCalGeom") << "*****************";
+//     edm::LogInfo("HGCalGeom") << "*****************";
+//     edm::LogInfo("HGCalGeom") << "DDShashlikSuperModule::execute: m_startAngle = " << m_startAngle/CLHEP::deg << " deg, m_stepAngle = " << m_stepAngle/CLHEP::deg << " deg, m_zoffset = " << m_zoffset; 
+//     edm::LogInfo("HGCalGeom") << "DDShashlikSuperModule::execute: c2c d= "<< dc2c << " = (" << offsetXc2c << "," << offsetYc2c << "," << offsetZc2c << ")"; 
+//     edm::LogInfo("HGCalGeom") << "DDShashlikSuperModule::execute: c2secondc d= "<< dc2secondc << " = (" << offsetXc2secondc << "," << offsetYc2secondc << "," << offsetZc2secondc << ")"; 
 
     for( int iy = 0; iy < 5; ++iy )
     {
@@ -116,20 +120,20 @@ DDShashlikSupermodule::execute( DDCompactView& cpv )
 	if( !rotation )
 	{
 
-	  //edm::LogInfo("HGCalGeom") << "Module " << copyNo << ": first: (" 
-	  //			    << theta/CLHEP::deg << ", " 
-	  //		            << phiX/CLHEP::deg << ", "
-	  //			    << (theta+phi)/CLHEP::deg << ", " 
-	  //			    << phiY/CLHEP::deg << ", "
-	  //			    << -1.0*phi/CLHEP::deg << ", " 
-	  //			    << phiZ/CLHEP::deg << ")";
-	  //edm::LogInfo("HGCalGeom") << "Module " << copyNo << ": second: (" 
-	  //			    << (theta+xphi)/CLHEP::deg << ", " 
-	  //			    << 0.0/CLHEP::deg << ", "
-	  //			    << 90. << ", " 
-	  //			    << 90. << ", "
-	  //			    << xphi/CLHEP::deg << ", " 
-	  //			    << 0.0/CLHEP::deg << ")"; 
+// 	  edm::LogInfo("HGCalGeom") << "Module " << copyNo << ": first: (" 
+// 	  			    << theta/CLHEP::deg << ", " 
+// 	  		            << phiX/CLHEP::deg << ", "
+// 	  			    << (theta+phi)/CLHEP::deg << ", " 
+// 	  			    << phiY/CLHEP::deg << ", "
+// 	  			    << -1.0*phi/CLHEP::deg << ", " 
+// 	  			    << phiZ/CLHEP::deg << ")";
+// 	  edm::LogInfo("HGCalGeom") << "Module " << copyNo << ": second: (" 
+// 	  			    << (theta+xphi)/CLHEP::deg << ", " 
+// 	  			    << 0.0/CLHEP::deg << ", "
+// 	  			    << 90. << ", " 
+// 	  			    << 90. << ", "
+// 	  			    << xphi/CLHEP::deg << ", " 
+// 	  			    << 0.0/CLHEP::deg << ")"; 
 
 
 	  // why is phi rot in z in second matrix not phiZ instead of 0.0?
@@ -142,19 +146,19 @@ DDShashlikSupermodule::execute( DDCompactView& cpv )
 	//
 	// we will do two translations for each module, one in xz and one in yz
 	
-	//edm::LogInfo("HGCalGeom") << "Module " << copyNo << ":tran1 ("
-	//			  << offsetX << ","
-	//			  << 0.0 << ","
-	//			  << offsetZ1 << ")";
-	//edm::LogInfo("HGCalGeom") << "Module " << copyNo << ":tran2 ("
-	//			  << 0.0 << ","
-	//			  << offsetY << ","
-	//			  << offsetZ2 << ")";
-	//
-	//edm::LogInfo("HGCalGeom") << "Module " << copyNo << ":tran1+2 ("
-	//			  << offsetX << ","
-	//			  << offsetY << ","
-	//			  << offsetZ1+offsetZ2 << ")" << " (copyNo & 5)=" << (copyNo & 5);
+// 	edm::LogInfo("HGCalGeom") << "Module " << copyNo << ":tran1 ("
+// 				  << offsetX << ","
+// 				  << 0.0 << ","
+// 				  << offsetZ1 << ")";
+// 	edm::LogInfo("HGCalGeom") << "Module " << copyNo << ":tran2 ("
+// 				  << 0.0 << ","
+// 				  << offsetY << ","
+// 				  << offsetZ2 << ")";
+	
+// 	edm::LogInfo("HGCalGeom") << "Module " << copyNo << ":tran1+2 ("
+// 				  << offsetX << ","
+// 				  << offsetY << ","
+// 				  << offsetZ1+offsetZ2 << ")" << " (copyNo & 5)=" << (copyNo & 5);
 
 			  
 	DDTranslation tran1( offsetX, 0.0, offsetZ1 );
