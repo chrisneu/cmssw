@@ -64,6 +64,7 @@ DDShashlikEndcap::createQuarter( DDCompactView& cpv, int xQuadrant, int yQuadran
   double phiZ = 3*theta; 
   double offsetZ = m_zoffset;
   double offsetXY = m_xyoffset;
+  int row(0), column(0);
 
   // ccn: these need to change for no-taper option
   //double offsetX = offsetZ * tan( xphi );
@@ -71,10 +72,12 @@ DDShashlikEndcap::createQuarter( DDCompactView& cpv, int xQuadrant, int yQuadran
   double offsetX = xQuadrant*0.5*offsetXY;
   double offsetY = yQuadrant*0.5*offsetXY;
 
-  while( abs(offsetY) < m_rMax)
+  while( abs(offsetX) < m_rMax)
   {
-    while( abs(offsetX) < m_rMax)
+    column++;
+    while( abs(offsetY) < m_rMax)
     {
+      row++;
       double limit = sqrt( offsetX*offsetX + offsetY*offsetY );
       
       // Make sure we do not add supermodules in rMin area
@@ -106,21 +109,26 @@ DDShashlikEndcap::createQuarter( DDCompactView& cpv, int xQuadrant, int yQuadran
 
 	copyNo += m_incrCopyNo;
       }
-      xphi +=  xQuadrant*2.*tiltAngle;
-      // ccn: change this for no-taper
-      //offsetX = offsetZ * tan( xphi );
-      offsetX += xQuadrant*offsetXY;
+
+      yphi += yQuadrant*2.*tiltAngle;
+      offsetY += yQuadrant*offsetXY;
+
+      //xphi +=  xQuadrant*2.*tiltAngle;
+      //// ccn: change this for no-taper
+      ////offsetX = offsetZ * tan( xphi );
+      //offsetX += xQuadrant*offsetXY;
     }
-    yphi += yQuadrant*2.*tiltAngle;
-    xphi =  xQuadrant*tiltAngle;
+    xphi += xQuadrant*2.*tiltAngle;
+    yphi =  yQuadrant*tiltAngle;
     // ccn: change this for no-taper
     //offsetX = offsetZ * tan( xphi );
     //offsetY = offsetZ * tan( yphi );
-    offsetX = xQuadrant*0.5*offsetXY;
-    offsetY += yQuadrant*offsetXY;
+    offsetY = yQuadrant*0.5*offsetXY;
+    offsetX += xQuadrant*offsetXY;
 
   }
   
+  //std::cout << row << " rows and " << column << " columns in quadrant " << xQuadrant << ":" << yQuadrant << std::endl;
   return copyNo;
 }
 
