@@ -2,13 +2,14 @@
 <DDDefinition xmlns="http://www.cern.ch/cms/DDL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.cern.ch/cms/DDL ../../../DetectorDescription/Schema/DDLSchema.xsd">
 
  <ConstantsSection label="shashliksupermodule.xml" eval="true">
-   <!-- ccn: changed for no-taper option
-   <Constant name="moduleTiltAngle"        value="atan(([shashlikmodule:widthBack]-[shashlikmodule:widthFront] ) / [shashlikmodule:moduleThickness] )"/>
-   ccn: I think this calc of R should be value="[0.5*shashlikmodule:widthFront]/tan(0.5*[shashliksupermodule:moduleTiltAngle])"/>
-   <Constant name="R" value="[shashlikmodule:widthFront]/tan([shashliksupermodule:moduleTiltAngle])"/>
-   <Constant name="superModuleWidthFront"  value="sin(5*[moduleTiltAngle])*[shashliksupermodule:R]"/>
-   <Constant name="superModuleWidthBack"   value="tan(5*[moduleTiltAngle])*([shashliksupermodule:R]+[shashlikmodule:moduleThickness])"/>
-   <Constant name="superModuleThickness"   value="[shashlikmodule:moduleThickness]"/>
+   <!-- ccn: all of these changed for no-taper option
+    <Constant name="moduleTiltAngle"        value="atan(([shashlikmodule:widthBack]-[shashlikmodule:widthFront] ) / [shashlikmodule:moduleThickness] )"/>
+    ccn: Although not used in the no-taper version 
+      I think this calc of R should be R="[0.5*shashlikmodule:widthFront]/tan(0.5*[shashliksupermodule:moduleTiltAngle])"/>
+    <Constant name="R" value="[shashlikmodule:widthFront]/tan([shashliksupermodule:moduleTiltAngle])"/>
+    <Constant name="superModuleWidthFront"  value="sin(5*[moduleTiltAngle])*[shashliksupermodule:R]"/>
+    <Constant name="superModuleWidthBack"   value="tan(5*[moduleTiltAngle])*([shashliksupermodule:R]+[shashlikmodule:moduleThickness])"/>
+    <Constant name="superModuleThickness"   value="[shashlikmodule:moduleThickness]"/>
    -->
    <Constant name="moduleTiltAngle"        value="atan(([shashlikmodule:widthBack]-[shashlikmodule:widthFront] ) / [shashlikmodule:moduleThickness] )"/>
    <Constant name="R" value="0.0"/>
