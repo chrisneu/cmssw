@@ -3,7 +3,7 @@
 
 <ConstantsSection label="shashlikmodule.xml" eval="true">
   <Constant name="widthFront"       value="14.00*mm"/>
-  <!-- ccn: changed for notaper <Constant name="widthBack"        value="14.56*mm"/> -->
+  <!-- ccn: changed to match widthFront for no-taper option -->
   <Constant name="widthBack"        value="14.00*mm"/>
   <Constant name="moduleThickness"  value="113.5*mm"/>
 </ConstantsSection>
